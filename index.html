@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holiday Homes & Apartment Rentals - Airbnb</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
+  <style>
+    .filterPopup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      visibility: hidden;
+
+    }
+
+    .filterPopupDisplay {
+      visibility: visible;
+      box-shadow: 15px 15px 35px rgb(71, 70, 70);
+
+
+    }
+
+    .input {
+      padding-left: 10px !important;
+    }
+
+    .profile-navbaar {
+      position: absolute;
+      top: 11%;
+      left: 82%;
+      box-shadow: 10px 10px 20px rgb(185, 173, 173);
+      visibility: hidden;
+    }
+
+    .profile-navbaar-display {
+      visibility: visible;
+    }
+
+    .mobile-profile-navbaar {
+      display: none;
+    }
+
+    .mobile-profile-navbaar-display {
+      display: block;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .show-on-click-button {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- navbar -->
+
+  <div class="max-w-[1320px] grid md:grid-cols-3 grid-cols-1 place-content-evenly mx-auto mt-5 items-center">
+
+    <!-- 1col -->
+    <div class="logo flex justify-center md:flex-none md:justify-start">
+      <img src="logo.png" alt="logo" class="w-[105px] hover:w-[120px] ml-3 duration-500" />
+    </div>
+
+    <!-- 2col -->
+
+    <div
+      class="border-slate-300 border-2 rounded-[50px] font-normal hidden md:block shadow-lg duration-500 mx-3 hover:mx-[-2px]">
+      <div class="flex justify-center justify-between px-4 py-2">
+        <p class="md:text-[13px] lg:text-[15px]">
+          <a href="#">Any where</a>
+        </p>
+        <p calss="px-0"><a href="#" class="text-slate-300">|</a></p>
+        <p class="md:text-[13px] lg:text-[15px]"><a href="#">Any week</a></p>
+        <p><a href="#" class="text-slate-300">|</a></p>
+        <p class="md:text-[13px] lg:text-[15px]">
+          <a href="#" class="text-slate-600 font-light">Add guests
+            <i class="bi bi-search-heart-fill text-red-600 text-[15px]"></i>
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- 3col -->
+
+    <div class="hidden md:block">
+      <div class="flex justify-end items-center mr-5">
+        <p class="pl-2"><a href="#">Become a host</a></p>
+        <p><i class="bi bi-globe2 px-6 text-xl"></i></p>
+
+        <div id="mobileProfileBtn1"
+          class="border-slate-300 border-2 rounded-[50px] hover:bg-slate-200 text-[19px] px-2">
+          <i class="bi bi-list text-slate-600  p-0 w-8"></i>
+          <i class="bi bi-person-circle text-slate-600  w-8"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-5 border-1 border-slate-300" />
+
+
+
+  <!-- PROFILE NAVBAAR -->
+  <div id="profile-navbaar"
+    class="profile-navbaar w-[150px] sm:w-[220px] border border-1 rounded-md text-[13px] border-slate-300 py-2 bg-white ">
+    <div class="li ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Sign up</div>
+    <div class="li ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Log in</div>
+    <hr class="w-[130px] sm:w-[190px] mx-auto my-2 border-1 border-slate-300" />
+    <div class="li ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Airbnb your Home</div>
+    <div class="li ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Host an Experience</div>
+    <div class="li ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Help</div>
+  </div>
+
+
+
+
+
+
+
+  <!-- popup boxes -->
+  <!-- mx-auto mt-12 removed from here -->
+  <div class=" w-[300px] sm:w-[550px]  bg-white border-3 border   rounded-2xl   filterPopup" id="filterPopup">
+    <div
+      class=" text-slate-600 w-[300px] sm:w-[550px] text-xl sm:text-[30px] mt-5 font-semibold flex justify-between px-5">
+      <div>Filter</div>
+      <div class="hover:text-[#FF385C] text-[30px] sm:text-[40px] text-end">
+        <i class="bi bi-x" id="cancelBtn"></i>
+      </div>
+    </div>
+
+    <hr class=" mt-4 border-1 w-[250px] sm:w-[500px] border-[#FF385C] mx-auto" />
+
+    <div class=" w-full text-[16px] text-slate-600 sm:text-[23px] ml-[40px] mt-5 font-semibold">Fill Details</div>
+    <form class="form flex flex-col">
+
+      <input type="text"
+        class="input w-[200px] sm:w-[400px] my-1 sm:my-3 sm:h-[40px] mx-auto border rounded-lg  placeholder:text-[12px] sm:placeholder:text-[16px] outline-none focus:border-2 focus:border-[#FF385C] focus:placeholder:text-[#FF385C] "
+        name="" placeholder="Enter Origin" id="">
+      <input type="text"
+        class="input w-[200px] sm:w-[400px] my-1 sm:mt-3 sm:h-[40px] mx-auto border rounded-lg  placeholder:text-[12px] sm:placeholder:text-[16px] outline-none focus:border-2 focus:border-[#FF385C] focus:placeholder:text-[#FF385C]"
+        name="" placeholder="Enter Room Type" id="">
+
+      <!-- Price-Range -->
+      <div class=" text-[16px] sm:text-[23px] ml-[40px] my-1 sm:mt-2 font-[2px] text-slate-600">Price-Range</div>
+      <div class="flex justify-evenly mx-auto  w-[200px] sm:w-[400px]">
+        <input type="text"
+          class="input w-[90px] sm:w-[180px] my-1 sm:my-3 sm:h-[40px] mx-auto border rounded-lg placeholder:text-[12px] sm:placeholder:text-[16px] outline-none focus:border-2 focus:border-[#FF385C] focus:placeholder:text-[#FF385C]"
+          name="" placeholder="Price From" id="">
+        <input type="text"
+          class="input w-[90px] sm:w-[180px] my-1 sm:mt-3 sm:h-[40px] mx-auto border rounded-lg  placeholder:pl-4 placeholder:text-[12px] sm:placeholder:text-[16px] outline-none focus:border-2 focus:border-[#FF385C] focus:placeholder:text-[#FF385C]"
+          name="" placeholder="Price Upto" id="">
+      </div>
+      <button type="button"
+        class="border border-slate-600 border-2 rounded-md  px-3 bg-white w-[90px] mx-auto my-5 hover:border-[#FF385C] hover:text-[#FF385C] font-semibold text-[16px] sm:text-[20px] text-slate-600"
+        id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+  <!-- </div> -->
+
+  <!-- searchbar before md -->
+
+  <div
+    class="max-w-[768px] grid grid-cols-12 border-2 border-slate-300 p-1 rounded-[20px] items-center mx-auto my-7 block md:hidden mx-2 shadow-lg">
+    <div class=""><i class="bi bi-search text-2xl"></i></div>
+
+    <div class="col-span-10 font-semibold text-lg pl-2">
+      <p class="">Where to ?</p>
+      <div class="flex font-normal">
+        <p class="text-[13px]"><a href="#">Any where</a></p>
+        <p calss="">
+          <a href="#" class="text-slate-400 p-2 font-bold">.</a>
+        </p>
+        <p class="text-[13px]"><a href="#">Any week</a></p>
+        <p calss="">
+          <a href="#" class="text-slate-400 p-2 font-bold">.</a>
+        </p>
+        <p class="text-[13px]"><a href="#">Add guests</a></p>
+      </div>
+    </div>
+
+    <div id="mobileProfileBtn" class="border-[2px] border-slate-300 p-1 rounded-[100%] mx-auto">
+      <i class="bi bi-person-circle text-slate-600 sm:text-xl w-8"></i>
+    </div>
+  </div>
+
+
+  <!--MOBILE PROFILE NAVBAAR -->
+  <div id="mobile-profile-navbaar"
+    class="mobile-profile-navbaar md:hidden w-auto mx-auto border border-1 rounded-md text-[13px] border-slate-300 py-2 bg-white">
+    <div class="text-[17px] ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Sign up</div>
+    <div class="text-[17px] ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Log in</div>
+    <hr class="mx-[20px] w-auto my-2 border-1 border-slate-300" />
+    <div class="text-[17px] ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Airbnb your Home</div>
+    <div class="text-[17px] ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Host an Experience</div>
+    <div class="text-[17px] ml-[10px] hover:bg-[#e1e1d0] my-1 duration-500">Help</div>
+  </div>
+
+
+
+  <!-- menubaar -->
+
+  <div
+    class="max-w-[1250px] grid grid-cols-3 md:grid-cols-6 lg:grid-cols-12 md:p-auto mx-auto flex justify-between justify-center my-7 gap-5 md:gap-2">
+
+    <!-- ic1 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic1.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Pools</p>
+    </div>
+
+    <!-- ic2 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic2.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center pl-[5px]">Beaches</p>
+    </div>
+
+    <!-- ic3 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic3.jpg" class="w-8 md:w-12 mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center ">Farms</p>
+    </div>
+
+    <!-- ic4 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic4.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">OMG!</p>
+    </div>
+
+    <!-- ic5 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic5.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Campervans</p>
+    </div>
+
+    <!-- ic6 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic6.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center ">Ilands</p>
+    </div>
+
+    <!-- ic7 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic7.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Honeymoons</p>
+    </div>
+
+    <!-- ic8 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic8.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Treehousess</p>
+    </div>
+
+    <!-- ic9 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic9.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center ">Maldives</p>
+    </div>
+    <!-- ic10 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic10.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Valley</p>
+    </div>
+
+    <!-- ic11 -->
+    <div class="mx-auto hover:underline-offset-[20px] hover:underline decoration-2 ">
+      <img src="ic11.jpg" class="w-8 md:w-12  mx-auto" alt="" />
+      <p class="text-[13px] text-normal text-center">Amzaing-pools</p>
+    </div>
+
+    <!-- filters -->
+    <div id="filterBtn"
+      class="border-2 rounded-[20px] border-slate-300 flex justify-center items-center h-8 w-20  my-auto md:mr-5 hover:bg-slate-200 mx-auto">
+      <i class="bi bi-filter text-md"></i>
+      <p class="font-semibold font-sans text-[18px] pl-2">Filter</p>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <!-- playing with cards -->
+
+  <div class="cards max-w-[1250px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mx-auto justify-center">
+    <!-- simple cards -->
+    <!-- 1card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5 ">
+      <div class="h-[284px] w-[299px] bg-[url('im1.jpg')]  rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Surat , Gujarat</p>
+          <p class="text-md text-slate-600">Gujarati hotels</p>
+          <p class="text-sm text-slate-600">25 Oct - 12 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]
+          "></i>
+          <p>4.7</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im2.jpg')] rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Panji , Goa</p>
+          <p class="text-md text-slate-600">Royal resorts</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1399 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.9</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im3.jpg')] rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Agra, U.P.</p>
+          <p class="text-md text-slate-600">Patil resorts</p>
+          <p class="text-sm text-slate-600">29 Oct - 8 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1199 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im4.jpg')] rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Abu , Rajasthan</p>
+          <p class="text-md text-slate-600">Royal hotels</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+    <!-- 5card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im5.jpg')] rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Andman-Nicobar</p>
+          <p class="text-md text-slate-600">Shue hotels</p>
+          <p class="text-sm text-slate-600">25 Oct - 12 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹2799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.7</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im6.jpg')] rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Maldives</p>
+          <p class="text-md text-slate-600">Bamboos resort</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.9</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7card -->
+    <div class="w-[299px] h-[384px] mx-auto  justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im7.jpg')] rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Jammu & Kashmir</p>
+          <p class="text-md text-slate-600">Khan hotels</p>
+          <p class="text-sm text-slate-600">29 Oct - 8 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1199 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8card -->
+    <div class="w-[299px] h-[384px] mx-auto justify-center my-5">
+      <div class="h-[284px] w-[299px] bg-[url('im8.jpg')] rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-10px]">Abu , Rajasthan</p>
+          <p class="text-md text-slate-600">Mount resort</p>
+          <p class="text-md text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2nd type card -->
+
+    <!-- 9card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im9.jpg')] mx-auto rounded-xl  mx-auto my-5 ">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white flex justify-evenly mt-[230px]  hover:px-4 px-2 duration-300 ">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Maldives</p>
+          <p class="text-md ">Indi resort</p>
+          <p class="text-sm">28 Oct-15 Nov</p>
+          <p class="text-lg font-semibold">₹1899 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00] text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im10.jpg')] mx-auto rounded-xl  mx-auto my-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">JammuKashmir</p>
+          <p class="text-md">rax resort</p>
+          <p class="text-sm">26 Oct-5 Nov</p>
+          <p class="text-lg font-semibold">₹2929 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.8</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im11.jpg')] mx-auto rounded-xl  my-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Laddakh</p>
+          <p class="text-md">Valley resort</p>
+          <p class="text-sm">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.2</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im12.jpg')] mx-auto rounded-xl  mx-auto my-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Kerala</p>
+          <p class="text-md">AB resort</p>
+          <p class="text-sm">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im13.jpg')] mx-auto rounded-xl mt-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Palm-UAE</p>
+          <p class="text-md">Indi resort</p>
+          <p class="text-sm">28 Oct - 15 Nov</p>
+          <p class="text-lg font-semibold">₹101899 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im14.jpg')] mx-auto rounded-xl mt-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Dubai-UAE</p>
+          <p class="text-md">Burj-Al-Arab</p>
+          <p class="text-sm">26 Oct - 5 Nov</p>
+          <p class="text-lg font-semibold">₹35929 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.8</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im15.jpg')] mx-auto rounded-xl mt-5">
+      <div class="pt-3 pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4  flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Ambar,Goa</p>
+          <p class="text-md">Mount resort</p>
+          <p class="text-sm">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold">₹3999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.2</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16card -->
+
+    <div class="w-[299px] h-[384px] bg-[url('im16.jpg')] mx-auto rounded-xl mt-5">
+      <div class="pt-3  pl-[265px]">
+        <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+      </div>
+
+      <!-- textarea -->
+      <div class="grid grid-cols-2 text-white px-2 hover:px-4   flex justify-evenly mt-[230px] duration-300">
+        <div class="">
+          <p class="text-lg font-bold mb-[-10px]">Shimla</p>
+          <p class="text-md">Thar resort</p>
+          <p class="text-sm">20 Oct - 3 Nov</p>
+          <p class="text-lg font-semibold">₹4599 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- -------THIS SHOULD BE OPEN BY CLICKING ON SHOW MORE BUTTON----- -->
+
+    <!-- sample card -->
+
+    <!-- 17card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im17.jpg')] mx-auto rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Surat, Gujarat</p>
+          <p class="text-md text-slate-600">Gujarati hotels</p>
+          <p class="text-sm text-slate-600">25 Oct - 12 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.7</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 18card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im18.jpg')] mx-auto rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Panji, Goa</p>
+          <p class="text-md text-slate-600">Royal resorts</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1399 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.9</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 19card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im19.jpg')] mx-auto rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Katch, Guj</p>
+          <p class="text-md text-slate-600">Patil hotels</p>
+          <p class="text-sm text-slate-600">29 Oct - 8 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1199 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 20card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im20.jpg')] mx-auto rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Taj, Mumbai</p>
+          <p class="text-md text-slate-600">Royal hotels</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+    <!-- 21card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im21.jpg')] mx-auto rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Maldives</p>
+          <p class="text-md text-slate-600">Shue hotels</p>
+          <p class="text-sm text-slate-600">25 Oct - 12 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹2799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00] "></i>
+          <p>4.7</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 22card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im22.jpg')] mx-auto rounded-xl">
+        <div class="grid pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Maldives</p>
+          <p class="text-md text-slate-600">Bamboos resort</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1799 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.9</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 23card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im23.jpg')] mx-auto rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Shimla</p>
+          <p class="text-md text-slate-600">Khan hotels</p>
+          <p class="text-sm text-slate-600">29 Oct - 8 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹1199 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 24card -->
+    <div class="w-[299px] h-[384px] mt-5 mx-auto hide">
+      <div class="h-[284px] w-[299px] bg-[url('im24.jpg')] mx-auto rounded-xl">
+        <div class="grid  pl-[265px]">
+          <i class="redheart fa-regular fa-heart text-white text-xl pt-3 duration-300"></i>
+        </div>
+      </div>
+      <div class="h-[100px] w-[299px] grid grid-cols-2">
+        <!-- text data -->
+        <div class="">
+          <p class="text-base font-bold mb-[-8px]">Laddakh</p>
+          <p class="text-md text-slate-600">Mount resort</p>
+          <p class="text-sm text-slate-600">30 Oct - 10 Nov</p>
+          <p class="text-lg font-semibold mb-[-8px]">₹999 night</p>
+        </div>
+
+        <div class="flex gap-2 justify-end mr-5 mt-1">
+          <i class="bi bi-star-fill  text-[#ffcc00]"></i>
+          <p>4.5</p>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- footer -->
+
+  <hr class="mt-5 border-1 border-slate-300" />
+
+  <div class="text max-w-[1250px] mx-auto my-10 text-center">
+    <p class="text-md text-center tracking-wide font-semibold">
+      Continue exploring OMG! homes
+    </p>
+
+    <button
+      class="border-[1px]  border-slate-600 rounded-lg mx-auto py-2 px-5 mt-7 hover:border-[#FF385C] hover:text-[#FF385C]  text-[16px] sm:text-[20px] text-slate-600"
+      id="showMoreButton">
+      <p>Show more</p>
+    </button>
+  </div>
+
+  <div class="max-w-[1200px] mx-auto my-3">
+    <p class="text-[22px] flex justify-center md:justify-start md:ml-10 lg:ml-0 font-semibold mb-5">
+      Inspiration for future getaways
+    </p>
+    <p
+      class="text-[15px] flex justify-center md:justify-start md:ml-10 lg:ml-0 font-semibold underline underline-offset-[5px]">
+      Things to do
+    </p>
+    <hr class="border-1 border-slate-300" />
+  </div>
+
+  <div class="max-w-[1200px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto">
+    <div class="my-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">London</p>
+        <p class="text-slate-500 text-[13px]">England</p>
+      </a>
+    </div>
+
+    <div class="my-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Brussels</p>
+        <p class="text-slate-500 text-[13px]">Belgium</p>
+      </a>
+    </div>
+
+    <div class="my-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Thimphu</p>
+        <p class="text-slate-500 text-[13px]">Bhutan</p>
+      </a>
+    </div>
+
+    <div class="my-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Cairo</p>
+        <p class="text-slate-500 text-[13px]">Egypt</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center ">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Helsinki</p>
+        <p class="text-slate-500 text-[13px]">Finland</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">New Delhi</p>
+        <p class="text-slate-500 text-[13px]">India</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Dublin</p>
+        <p class="text-slate-500 text-[13px]">Ireland</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Amsterdam</p>
+        <p class="text-slate-500 text-[13px]">Netherlands</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Muscat</p>
+        <p class="text-slate-500 text-[13px]">Oman</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Warsaw</p>
+        <p class="text-slate-500 text-[13px]">Poland</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[13px]">Lisbon</p>
+        <p class="text-slate-500 text-[13px]">Portugal</p>
+      </a>
+    </div>
+
+    <div class="mb-5 mx-auto text-center">
+      <a href="">
+        <p class="mb-[-5px] text-[14px] underline items-center">Show more</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- 2nd footer list -->
+
+  <div class="bg-slate-100 my-5">
+    <div class="max-w-[1200px] text-center sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mx-auto">
+      <!-- 1st row -->
+      <div class="text-[13px] font-semibold hover:underline mt-7 pt-7 sm:pt-0 md:mx-auto">
+        <a href=""> Support</a>
+      </div>
+      <div class="text-[13px] font-semibold hover:underline sm:mt-7 mt-4">
+        <a href="">Community</a>
+      </div>
+      <div class="text-[13px] font-semibold hover:underline md:mt-7 mt-4">
+        <a href="">Hosting</a>
+      </div>
+      <div class="text-[13px] font-semibold hover:underline md:mt-7 mt-4">
+        <a href="">Airbnb</a>
+      </div>
+
+      <!--2 row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Help Center</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Visit our community forum</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Try hosting</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Newsroom</a>
+      </div>
+
+      <!-- 3rd row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">AirCover</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Support Afghan refugees</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">AirCover for Hosts</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Learn about new features</a>
+      </div>
+
+      <!-- 4th row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Safety information</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Combating discrimination</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Explore hosting resources</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Letter from our founders</a>
+      </div>
+
+      <!-- 5th row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Supporting people with disabilities</a>
+      </div>
+
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Airbnb.org: disaster relief housing</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Careers</a>
+      </div>
+
+      <!-- 6th row -->
+
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Report a neighbourhood concern</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">How to host responsibly</a>
+      </div>
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Investors</a>
+      </div>
+
+      <!-- 7th row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Our COVID-19 Response</a>
+      </div>
+
+      <!-- 8th row -->
+      <div class="mt-3 hover:underline text-[14px] text-slate-500">
+        <a href="">Cancellation options</a>
+      </div>
+
+      <!-- 9th row -->
+      <div class="col-span-4 justify-center lg:flex lg:justify-between">
+        <div class="mt-16 mb-7 text-[12px] sm:text-[14px] justify-center text-slate-700 flex col-span-2 justify-end">
+          <p class="mr-2 hover:underline">
+            <a href=""><i class="bi bi-globe2 pr-2 text-xl"></i></a>
+          </p>
+          <p class="mx-2 mt-1 hover:underline"><a href="">English (IN)</a></p>
+          <p class="mx-2 mt-1 hover:underline"><a href="">₹ INR</a></p>
+          <p class="mx-2 mt-1 hover:underline">
+            <a href="">Support & resources</a>
+          </p>
+        </div>
+
+        <div class="mt-16 mb-7 text-[10px] sm:text-[14px] justify-center flex text-slate-500 col-span-2 pb-7">
+          <p class="sm:mr-2 mr-1"><a href="">&copy; 2022 Airbnb, Inc.</a></p>
+          <p class="sm:mx-2 mx-1"><a href="">Privacy</a></p>
+          <p class="sm:mx-2 mx-1"><a href="">Terms</a></p>
+          <p class="sm:mx-2 mx-1"><a href="">Sitemap</a></p>
+          <p class="sm:mx-2 mx-1><a href="">Company details</a></p>
+            <p class=" sm:mx-2 mx-1"><a href="">Destinations</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="airbnb.js"></script>
+
+</body>
+
+</html>
